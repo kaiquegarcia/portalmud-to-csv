@@ -22,13 +22,6 @@ abstract class Runner {
             $this->csv->close();
         }
 
-        $app = $GLOBALS['application'];
-        if ($app->portalConnection) {
-            $app->portalConnection->close();
-        }
-        if ($app->muralConnection) {
-            $app->muralConnection->close();
-        }
         $this->log('finished');
     }
 

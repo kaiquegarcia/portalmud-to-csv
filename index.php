@@ -2,5 +2,5 @@
 
 require_once './src/bootstrap.php';
 
-$cmd = $argv[1] ?? "";
+$cmd = count($argv) > 1 ? join("_", array_slice($argv, 1)) : "";
 $application->run($cmd);

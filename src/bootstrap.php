@@ -13,6 +13,12 @@ $portalCategoryRepository = new \Repository\PortalCategoryRepository($applicatio
 $portalPostRepository = new \Repository\PortalPostRepository($application);
 
 # Register commands
+$application->on('export', function() {
+    echo 'What do you want to export? Please add the word to the command like the examples bellow:' . PHP_EOL;
+    echo '- export events' . PHP_EOL;
+    echo '- export columnists' . PHP_EOL;
+    echo '- export postnews' . PHP_EOL;
+});
 $application->on('export_events', new \Main\Portal\Events(100, ["startID" => 0]));
 $application->on('export_columnists', new \Main\Portal\Columnists(500));
-$application->on('export_post_news', new \Main\Portal\PostNews(100));
+$application->on('export_postnews', new \Main\Portal\PostNews(100));

@@ -22,16 +22,18 @@ class Application
             Env::PORTAL_DB_PORT(),
         );
 
-        $this->muralConnection = new DatabaseConnector(
-            Env::MURAL_DB_HOST(),
-            Env::MURAL_DB_USER(),
-            Env::MURAL_DB_PASS(),
-            Env::MURAL_DB_NAME(),
-            Env::MURAL_DB_PORT(),
-        );
+        if (Env::MURAL_DB_ENABLED() === "1") {
+            $this->muralConnection = new DatabaseConnector(
+                Env::MURAL_DB_HOST(),
+                Env::MURAL_DB_USER(),
+                Env::MURAL_DB_PASS(),
+                Env::MURAL_DB_NAME(),
+                Env::MURAL_DB_PORT(),
+            );
+        }
     }
 
-    public function on(string $command, Runner $runner) {
+    public function on(string $command, Runner | callable $runner) {
         $this->runners[$command] = $runner;
     }
 
@@ -39,7 +41,11 @@ class Application
         if ($command === "") {
             echo 'Please run add one of the following words to run a useful command:' . PHP_EOL;
             foreach($this->runners as $cmd => $runner) {
-                echo "- $cmd" . PHP_EOL;
+                if (!$runner instanceof Runner) {
+                    continue;
+                }
+                
+                echo '- ' . str_replace('_', ' ', $cmd) . PHP_EOL;
             }
             return;
         }
@@ -48,7 +54,20 @@ class Application
             throw new \InvalidArgumentException("Command not found");
         }
 
-        $this->runners[$command]->run();
-        $this->runners[$command]->stop();
+        $runner = $this->runners[$command];
+        if ($runner instanceof Runner) {
+            $this->runners[$command]->run();
+            $this->runners[$command]->stop();
+        } else {
+            $runner();
+        }
+
+        if ($this->portalConnection) {
+            $this->portalConnection->close();
+        }
+
+        if ($this->muralConnection) {
+            $this->muralConnection->close();
+        }
     }
 }
