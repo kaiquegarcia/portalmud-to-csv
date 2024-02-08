@@ -17,6 +17,7 @@ $muralProfileLinkRepository = new \Repository\MuralProfileLinkRepository($applic
 $muralProfileAddressRepository = new \Repository\MuralProfileAddressRepository($application);
 $muralProfileCategoryRepository = new \Repository\MuralProfileCategoryRepository($application);
 $muralProfileRepository = new \Repository\MuralProfileRepository($application);
+$labTeacherRepository = new \Repository\LabTeacherRepository($application);
 
 # Register commands
 $application->on('export', function() {
@@ -25,8 +26,10 @@ $application->on('export', function() {
     echo '- export columnists' . PHP_EOL;
     echo '- export postnews' . PHP_EOL;
     echo '- export mural-profiles' . PHP_EOL;
+    echo '- export lab-teachers' . PHP_EOL;
 });
 $application->on('export_events', new \Main\Portal\Events(100, ["startID" => 0]));
 $application->on('export_columnists', new \Main\Portal\Columnists(500));
 $application->on('export_postnews', new \Main\Portal\PostNews(100));
 $application->on('export_mural-profiles', new \Main\Portal\MuralProfiles(100));
+$application->on('export_lab-teachers', new \Main\Portal\LabTeachers(100));
