@@ -3,6 +3,7 @@
 namespace Repository;
 
 use Entity\Event;
+use Main\Application;
 use Utils\DatabaseConnector;
 use Utils\Env;
 
@@ -23,7 +24,7 @@ class EventRepository extends Repository {
 
     public static function getDatabaseConnector(): DatabaseConnector
     {
-        return $GLOBALS["application"]->portalConnection;
+        return Application::application()->portalConnection;
     }
 
     public static function getDatabaseSchema(): string

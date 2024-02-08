@@ -62,12 +62,21 @@ class Application
             $runner();
         }
 
-        if ($this->portalConnection) {
+        if (isset($this->portalConnection)) {
             $this->portalConnection->close();
         }
 
-        if ($this->museuConnection) {
+        if (isset($this->museuConnection)) {
             $this->museuConnection->close();
         }
+    }
+
+    public static function __callStatic($name, $arguments)
+    {
+        if (isset($GLOBALS[$name])) {
+            return $GLOBALS[$name];
+        }
+
+        return null;
     }
 }

@@ -2,22 +2,18 @@
 
 namespace Repository;
 
-use Entity\PortalPost;
+use Entity\MuralProfile;
 use Main\Application;
 use Utils\DatabaseConnector;
 use Utils\Env;
 
-class PortalPostRepository extends Repository
+class MuralProfileRepository extends Repository
 {
-    public function list(array $categoryIDs, int $limit, int $offset)
+    public function list(int $limit, int $offset)
     {
-        if (empty($categoryIDs)) {
-            throw new \InvalidArgumentException("CategoryIDs cannot be empty");
-        }
-
         return $this->all(
             cacheKey: "",
-            condition: "`status`=1 AND `categoryID` IN (" . join(", ", $categoryIDs) . ")",
+            condition: "`status`=1 AND `person_authorID`!=0",
             orderBy: "`ID` ASC",
             limit: $limit,
             offset: $offset,
@@ -26,7 +22,7 @@ class PortalPostRepository extends Repository
 
     public static function getTableName(): string
     {
-        return "portal_portalpost";
+        return "mural_profile";
     }
 
     public static function getDatabaseConnector(): DatabaseConnector
@@ -49,20 +45,30 @@ class PortalPostRepository extends Repository
         return "";
     }
 
-    protected function toEntity(array $data): PortalPost
+    protected function toEntity(array $data): MuralProfile
     {
-        return new PortalPost(
+        return new MuralProfile(
             ID: $data["ID"],
             status: $data["status"],
+            personAuthorID: $data["person_authorID"],
             categoryID: $data["categoryID"],
-            columnistID: $data["columnistID"],
+            modalityID: $data["modalityID"],
+            typeID: $data["typeID"],
+            doc: $data["doc"],
+            docType: $data["doc_type"],
             URL: $data["URL"],
             thumb: $data["thumb"],
-            thumbCredit: $data["credit_thumb"] ?? "",
-            title: $data["title"],
-            content: $data["content"],
-            preview: $data["preview"],
-            postDate: $data["post_date"],
+            name: $data["name"],
+            nickname: $data["nickname"],
+            bio: $data["bio"],
+            email: $data["email"],
+            website: $data["website"],
+            phone: $data["phone"],
+            phoneFix: $data["phone_fix"],
+            whatsapp: $data["whatsapp"],
+            foundationYear: $data["foundation_year"],
+            foundationDate: $data["foundation_date"],
+            createdAt: $data["registry_date"],
             photoURLs: $data["photoURLs"] ? explode(";", $data["photoURLs"]) : [],
         );
     }

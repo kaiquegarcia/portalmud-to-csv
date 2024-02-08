@@ -2,18 +2,18 @@
 
 namespace Repository;
 
-use Entity\Category;
+use Entity\MuralProfileCategory;
 use Main\Application;
 use Utils\DatabaseConnector;
 use Utils\Env;
 
-class CategoryRepository extends Repository {
-    public function get(int $ID): Category | null {
+class MuralProfileCategoryRepository extends Repository {
+    public function get(int $ID): MuralProfileCategory | null {
         return $this->first("$ID", "`ID` = $ID AND `status` != 2");
     }
 
     public static function getTableName(): string {
-        return 'basic_category';
+        return 'mural_profilecategory';
     }
 
     public static function getDatabaseConnector(): DatabaseConnector
@@ -36,8 +36,8 @@ class CategoryRepository extends Repository {
         return "";
     }
 
-    protected function toEntity(array $data): Category {
-        return new Category(
+    protected function toEntity(array $data): MuralProfileCategory {
+        return new MuralProfileCategory(
             ID: $data["ID"],
             status: $data["status"],
             topID: $data["topID"],

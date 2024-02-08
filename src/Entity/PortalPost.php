@@ -2,6 +2,7 @@
 
 namespace Entity;
 
+use Main\Application;
 use Utils\Env;
 use Utils\Format;
 
@@ -23,8 +24,8 @@ class PortalPost implements Entity {
 
     public function toCSVArray(): array {
         $mainPhoto = Format::mainPhoto($this->thumb);
-        $category = $GLOBALS["portalCategoryRepository"]->get($this->categoryID);
-        $columnist = $GLOBALS["columnistRepository"]->get($this->columnistID);
+        $category = Application::portalCategoryRepository()->get($this->categoryID);
+        $columnist = Application::columnistRepository()->get($this->columnistID);
 
         $tags = [];
         if ($category) {

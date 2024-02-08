@@ -2,6 +2,7 @@
 
 namespace Entity;
 
+use Main\Application;
 use Utils\Env;
 use Utils\Format;
 
@@ -92,7 +93,7 @@ class Event implements Entity
 
     private function getModalityNames(): array {
         $names = [];
-        $modalityCollection = $GLOBALS['eventModalityRepository']->getByEventID($this->ID);
+        $modalityCollection = Application::eventModalityRepository()->getByEventID($this->ID);
         if ($modalityCollection) {
             /** @var \Entity\EventModality $modality */
             foreach($modalityCollection as $modality) {
@@ -104,7 +105,7 @@ class Event implements Entity
             return $names;
         }
 
-        $category = $GLOBALS['categoryRepository']->get($this->categoryID);
+        $category = Application::categoryRepository()->get($this->categoryID);
         if ($category) {
             return [$category->name];
         }
@@ -113,7 +114,7 @@ class Event implements Entity
     }
 
     private function getHours(): string {
-        $hoursCollection = $GLOBALS['eventHoursRepository']->getByEventID($this->ID);
+        $hoursCollection = Application::eventHoursRepository()->getByEventID($this->ID);
         return Format::eventHours($hoursCollection);
     }
 

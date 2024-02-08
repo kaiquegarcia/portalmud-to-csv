@@ -3,6 +3,7 @@
 namespace Repository;
 
 use Entity\EventHours;
+use Main\Application;
 use Utils\DatabaseConnector;
 use Utils\Env;
 
@@ -21,7 +22,7 @@ class EventHoursRepository extends Repository {
 
     public static function getDatabaseConnector(): DatabaseConnector
     {
-        return $GLOBALS["application"]->portalConnection;
+        return Application::application()->portalConnection;
     }
 
     public static function getDatabaseSchema(): string

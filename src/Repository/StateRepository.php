@@ -2,18 +2,18 @@
 
 namespace Repository;
 
-use Entity\Category;
+use Entity\State;
 use Main\Application;
 use Utils\DatabaseConnector;
 use Utils\Env;
 
-class CategoryRepository extends Repository {
-    public function get(int $ID): Category | null {
+class StateRepository extends Repository {
+    public function get(int $ID): State | null {
         return $this->first("$ID", "`ID` = $ID AND `status` != 2");
     }
 
     public static function getTableName(): string {
-        return 'basic_category';
+        return 'cep_state';
     }
 
     public static function getDatabaseConnector(): DatabaseConnector
@@ -36,15 +36,12 @@ class CategoryRepository extends Repository {
         return "";
     }
 
-    protected function toEntity(array $data): Category {
-        return new Category(
+    protected function toEntity(array $data): State {
+        return new State(
             ID: $data["ID"],
             status: $data["status"],
-            topID: $data["topID"],
-            thumb: $data["thumb"],
-            URL: $data["URL"],
+            UF: $data["UF"],
             name: $data["name"],
-            searchURI: $data["searchURI"],
             createdAt: $data["registry_date"],
             updatedAt: $data["status_date"],
         );

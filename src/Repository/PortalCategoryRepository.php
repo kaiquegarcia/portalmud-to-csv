@@ -4,6 +4,7 @@ namespace Repository;
 
 use Collection\EntityCollection;
 use Entity\Category;
+use Main\Application;
 use Utils\DatabaseConnector;
 use Utils\Env;
 
@@ -34,7 +35,7 @@ class PortalCategoryRepository extends Repository {
 
     public static function getDatabaseConnector(): DatabaseConnector
     {
-        return $GLOBALS["application"]->portalConnection;
+        return Application::application()->portalConnection;
     }
 
     public static function getDatabaseSchema(): string

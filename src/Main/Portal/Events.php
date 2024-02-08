@@ -2,6 +2,7 @@
 
 namespace Main\Portal;
 
+use Main\Application;
 use Main\Runner;
 
 class Events extends Runner {
@@ -16,7 +17,7 @@ class Events extends Runner {
         );
 
         while (true) {
-            $collection = $GLOBALS['eventRepository']->list($startID, $offset, $this->limit);
+            $collection = Application::eventRepository()->list($startID, $offset, $this->limit);
             if (empty($collection)) {
                 break;
             }

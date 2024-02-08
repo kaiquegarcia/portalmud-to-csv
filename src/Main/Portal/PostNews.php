@@ -2,6 +2,7 @@
 
 namespace Main\Portal;
 
+use Main\Application;
 use Main\Runner;
 
 class PostNews extends Runner {
@@ -14,7 +15,7 @@ class PostNews extends Runner {
         );
 
         $categoryIDs = [];
-        $categoryCollection = $GLOBALS['portalCategoryRepository']->getByURL("fique-ligado");
+        $categoryCollection = Application::portalCategoryRepository()->getByURL("fique-ligado");
         if (!empty($categoryCollection)) {
             /** @var \Entity\Category $category */
             foreach($categoryCollection as $category) {
@@ -23,7 +24,7 @@ class PostNews extends Runner {
         }
 
         while (true) {
-            $collection = $GLOBALS['portalPostRepository']->list($categoryIDs, $this->limit, $offset);
+            $collection = Application::portalPostRepository()->list($categoryIDs, $this->limit, $offset);
             if (empty($collection)) {
                 break;
             }

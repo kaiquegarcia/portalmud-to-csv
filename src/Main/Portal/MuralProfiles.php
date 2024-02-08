@@ -5,17 +5,17 @@ namespace Main\Portal;
 use Main\Application;
 use Main\Runner;
 
-class Columnists extends Runner {
+class MuralProfiles extends Runner {
     public function run(): void
     {
         $offset = 0;
 
         $this->newCSV(
-            filename: 'portal_columnist_2',
+            filename: 'mural_profiles',
         );
 
         while (true) {
-            $collection = Application::columnistRepository()->list($this->limit, $offset);
+            $collection = Application::muralProfileRepository()->list($this->limit, $offset);
             if (empty($collection)) {
                 break;
             }
