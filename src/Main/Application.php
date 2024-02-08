@@ -8,7 +8,7 @@ use Utils\Env;
 class Application
 {
     public readonly DatabaseConnector $portalConnection;
-    public readonly DatabaseConnector $muralConnection;
+    public readonly DatabaseConnector $museuConnection;
     private array $runners = [];
 
     public function __construct()
@@ -22,13 +22,13 @@ class Application
             Env::PORTAL_DB_PORT(),
         );
 
-        if (Env::MURAL_DB_ENABLED() === "1") {
-            $this->muralConnection = new DatabaseConnector(
-                Env::MURAL_DB_HOST(),
-                Env::MURAL_DB_USER(),
-                Env::MURAL_DB_PASS(),
-                Env::MURAL_DB_NAME(),
-                Env::MURAL_DB_PORT(),
+        if (Env::MUSEU_DB_ENABLED() === "1") {
+            $this->museuConnection = new DatabaseConnector(
+                Env::MUSEU_DB_HOST(),
+                Env::MUSEU_DB_USER(),
+                Env::MUSEU_DB_PASS(),
+                Env::MUSEU_DB_NAME(),
+                Env::MUSEU_DB_PORT(),
             );
         }
     }
@@ -66,8 +66,8 @@ class Application
             $this->portalConnection->close();
         }
 
-        if ($this->muralConnection) {
-            $this->muralConnection->close();
+        if ($this->museuConnection) {
+            $this->museuConnection->close();
         }
     }
 }
