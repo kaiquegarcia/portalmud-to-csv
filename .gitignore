@@ -1,3 +1,6 @@
 .env
 _old/
 csvs/*.csv
+pending/
+pending_museu/
+visualizacoes-mud.csv
