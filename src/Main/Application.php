@@ -34,24 +34,19 @@ class Application
     }
 
     public function on(string $command, Runner | callable $runner) {
+        $command = str_replace(' ', '_', $command);
         $this->runners[$command] = $runner;
     }
 
     public function run(string $command) {
         if ($command === "") {
-            echo 'Please run add one of the following words to run a useful command:' . PHP_EOL;
-            foreach($this->runners as $cmd => $runner) {
-                if (!$runner instanceof Runner) {
-                    continue;
-                }
-                
-                echo '- ' . str_replace('_', ' ', $cmd) . PHP_EOL;
-            }
+            $this->help();
             return;
         }
 
         if (!isset($this->runners[$command])) {
-            throw new \InvalidArgumentException("Command not found");
+            $this->help('Invalid command! Please run add one of the following words to run a useful command:');
+            return;
         }
 
         $runner = $this->runners[$command];
@@ -68,6 +63,29 @@ class Application
 
         if (isset($this->museuConnection)) {
             $this->museuConnection->close();
+        }
+    }
+
+    public function help(
+        string $hint = '',
+        string $commandPrefix = '',
+    ) {
+        if ($hint == '') {
+            echo 'Please send one of the following arguments to properly run this application:' . PHP_EOL;
+        } else {
+            echo $hint . PHP_EOL;
+        }
+
+        foreach($this->runners as $command => $runner) {
+            if (!$runner instanceof Runner) {
+                continue;
+            }
+
+            if ($commandPrefix != '' && !str_starts_with($command, $commandPrefix)) {
+                continue;
+            }
+
+            echo '- ' . str_replace('_', ' ', $command) . PHP_EOL;
         }
     }
 
