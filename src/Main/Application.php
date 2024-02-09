@@ -89,6 +89,10 @@ class Application
         }
     }
 
+    public static function application(): self | null {
+        return $GLOBALS['application'];
+    }
+
     public static function __callStatic($name, $arguments)
     {
         if (isset($GLOBALS[$name])) {
