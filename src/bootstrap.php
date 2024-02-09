@@ -18,6 +18,13 @@ $muralProfileAddressRepository = new \Repository\MuralProfileAddressRepository($
 $muralProfileCategoryRepository = new \Repository\MuralProfileCategoryRepository($application);
 $muralProfileRepository = new \Repository\MuralProfileRepository($application);
 $labTeacherRepository = new \Repository\LabTeacherRepository($application);
+$museuCategoryRepository = new \Repository\MuseuCategoryRepository($application);
+$museuSubcategoryRepository = new \Repository\MuseuSubcategoryRepository($application);
+$museuCityRepository = new \Repository\MuseuCityRepository($application);
+$museuCountryRepository = new \Repository\MuseuCountryRepository($application);
+$museuDanceStyleRepository = new \Repository\MuseuDanceStyleRepository($application);
+$museuPeriodRepository = new \Repository\MuseuPeriodRepository($application);
+$museuPostRepository = new \Repository\MuseuPostRepository($application);
 
 # Register commands
 $application->on('export', function() {
@@ -27,9 +34,19 @@ $application->on('export', function() {
     echo '- export postnews' . PHP_EOL;
     echo '- export mural-profiles' . PHP_EOL;
     echo '- export lab-teachers' . PHP_EOL;
+    echo '- export acervo-clipping' . PHP_EOL;
+    echo '- export acervo-documents' . PHP_EOL;
+    echo '- export acervo-photographies' . PHP_EOL;
+    echo '- export acervo-graphic-materials' . PHP_EOL;
+    echo '- export acervo-videos' . PHP_EOL;
 });
 $application->on('export_events', new \Main\Portal\Events(100, ["startID" => 0]));
 $application->on('export_columnists', new \Main\Portal\Columnists(500));
 $application->on('export_postnews', new \Main\Portal\PostNews(100));
 $application->on('export_mural-profiles', new \Main\Portal\MuralProfiles(100));
 $application->on('export_lab-teachers', new \Main\Portal\LabTeachers(100));
+$application->on('export_acervo-clipping', new \Main\Museu\Posts(100, ["categoryID" => 19]));
+$application->on('export_acervo-documents', new \Main\Museu\Posts(100, ["categoryID" => 21]));
+$application->on('export_acervo-photographies', new \Main\Museu\Posts(100, ["categoryID" => 22]));
+$application->on('export_acervo-graphic-materials', new \Main\Museu\Posts(100, ["categoryID" => 23]));
+$application->on('export_acervo-videos', new \Main\Museu\Posts(100, ["categoryID" => 24]));

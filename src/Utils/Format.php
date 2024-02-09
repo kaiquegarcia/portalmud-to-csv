@@ -42,6 +42,20 @@ class Format {
     
         return join('|', $output);
     }
+
+    public static function toWordPressGalleryLegends(array $photoURLs) {
+        if (empty($photoURLs)) {
+            return '';
+        }
+    
+        $output = [];
+        foreach($photoURLs as $photoData) {
+            list($photoURL, $title) = explode(":", $photoData);
+            $output[] = $title;
+        }
+    
+        return join('|', $output);
+    }
     
     public static function nullableDate(string | null $date) {
         if ($date === Env::NULL_DATE() || $date === Env::NULL_DATETIME()) {
