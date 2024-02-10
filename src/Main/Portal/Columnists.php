@@ -2,8 +2,8 @@
 
 namespace Main\Portal;
 
-use Main\Application;
 use Main\Runner;
+use Utils\Globals;
 
 class Columnists extends Runner {
     public function run(): void
@@ -15,7 +15,7 @@ class Columnists extends Runner {
         );
 
         while (true) {
-            $collection = Application::columnistRepository()->list($this->limit, $offset);
+            $collection = Globals::columnistRepository()->list($this->limit, $offset);
             if (empty($collection)) {
                 break;
             }

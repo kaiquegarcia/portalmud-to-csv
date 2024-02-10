@@ -3,9 +3,9 @@
 namespace Entity;
 
 use Enums\MuralProfileLinkType;
-use Main\Application;
 use Utils\Env;
 use Utils\Format;
+use Utils\Globals;
 
 class MuralProfile implements Entity {
     public function __construct(
@@ -36,17 +36,17 @@ class MuralProfile implements Entity {
     public function toCSVArray(): array {
         $mainPhoto = Format::mainPhoto($this->thumb);
         // category & subcategory
-        $subcategory = Application::muralProfileCategoryRepository()->get($this->categoryID);
+        $subcategory = Globals::muralProfileCategoryRepository()->get($this->categoryID);
         $category = null;
         if (!$subcategory || $subcategory->topID <= 0) {
             $category = $subcategory;
             $subcategory = null;
         } else {
-            $category = Application::muralProfileCategoryRepository()->get($subcategory->topID);
+            $category = Globals::muralProfileCategoryRepository()->get($subcategory->topID);
         }
 
         // links
-        $links = Application::muralProfileLinkRepository()->list($this->ID, 100, 0);
+        $links = Globals::muralProfileLinkRepository()->list($this->ID, 100, 0);
 
         $website = $this->website;
         $facebook = $instagram = $youtube = "";
@@ -70,11 +70,11 @@ class MuralProfile implements Entity {
         }
 
         // address
-        $address = Application::muralProfileAddressRepository()->get($this->ID);
+        $address = Globals::muralProfileAddressRepository()->get($this->ID);
         $city = $state = null;
         if ($address) {
-            $state = Application::stateRepository()->get($address->stateID);
-            $city = Application::cityRepository()->get($address->cityID);
+            $state = Globals::stateRepository()->get($address->stateID);
+            $city = Globals::cityRepository()->get($address->cityID);
         }
 
         return [

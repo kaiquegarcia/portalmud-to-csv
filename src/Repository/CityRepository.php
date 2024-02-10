@@ -3,9 +3,9 @@
 namespace Repository;
 
 use Entity\City;
-use Main\Application;
 use Utils\DatabaseConnector;
 use Utils\Env;
+use Utils\Globals;
 
 class CityRepository extends Repository {
     public function get(int $ID): City | null {
@@ -18,7 +18,7 @@ class CityRepository extends Repository {
 
     public static function getDatabaseConnector(): DatabaseConnector
     {
-        return Application::application()->portalConnection;
+        return Globals::app()->portalConnection;
     }
 
     public static function getDatabaseSchema(): string

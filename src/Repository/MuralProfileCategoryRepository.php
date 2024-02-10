@@ -3,9 +3,9 @@
 namespace Repository;
 
 use Entity\MuralProfileCategory;
-use Main\Application;
 use Utils\DatabaseConnector;
 use Utils\Env;
+use Utils\Globals;
 
 class MuralProfileCategoryRepository extends Repository {
     public function get(int $ID): MuralProfileCategory | null {
@@ -18,7 +18,7 @@ class MuralProfileCategoryRepository extends Repository {
 
     public static function getDatabaseConnector(): DatabaseConnector
     {
-        return Application::application()->portalConnection;
+        return Globals::app()->portalConnection;
     }
 
     public static function getDatabaseSchema(): string

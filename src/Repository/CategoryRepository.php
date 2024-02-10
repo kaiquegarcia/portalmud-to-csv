@@ -3,9 +3,9 @@
 namespace Repository;
 
 use Entity\Category;
-use Main\Application;
 use Utils\DatabaseConnector;
 use Utils\Env;
+use Utils\Globals;
 
 class CategoryRepository extends Repository {
     public function get(int $ID): Category | null {
@@ -18,7 +18,7 @@ class CategoryRepository extends Repository {
 
     public static function getDatabaseConnector(): DatabaseConnector
     {
-        return Application::application()->portalConnection;
+        return Globals::app()->portalConnection;
     }
 
     public static function getDatabaseSchema(): string

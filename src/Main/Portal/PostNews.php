@@ -2,8 +2,8 @@
 
 namespace Main\Portal;
 
-use Main\Application;
 use Main\Runner;
+use Utils\Globals;
 
 class PostNews extends Runner {
     public function run(): void
@@ -15,7 +15,7 @@ class PostNews extends Runner {
         );
 
         $categoryIDs = [];
-        $categoryCollection = Application::portalCategoryRepository()->getByURL("fique-ligado");
+        $categoryCollection = Globals::portalCategoryRepository()->getByURL("fique-ligado");
         if (!empty($categoryCollection)) {
             /** @var \Entity\Category $category */
             foreach($categoryCollection as $category) {
@@ -24,7 +24,7 @@ class PostNews extends Runner {
         }
 
         while (true) {
-            $collection = Application::portalPostRepository()->list($categoryIDs, $this->limit, $offset);
+            $collection = Globals::portalPostRepository()->list($categoryIDs, $this->limit, $offset);
             if (empty($collection)) {
                 break;
             }

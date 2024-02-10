@@ -3,9 +3,9 @@
 namespace Repository;
 
 use Entity\MuseuCountry;
-use Main\Application;
 use Utils\DatabaseConnector;
 use Utils\Env;
+use Utils\Globals;
 
 class MuseuCountryRepository extends Repository {
     public function get(int $ID): MuseuCountry | null {
@@ -18,7 +18,7 @@ class MuseuCountryRepository extends Repository {
 
     public static function getDatabaseConnector(): DatabaseConnector
     {
-        return Application::application()->museuConnection;
+        return Globals::app()->museuConnection;
     }
 
     public static function getDatabaseSchema(): string

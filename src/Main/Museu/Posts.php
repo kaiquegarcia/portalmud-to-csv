@@ -4,8 +4,8 @@ namespace Main\Museu;
 
 use Exception;
 use InvalidArgumentException;
-use Main\Application;
 use Main\Runner;
+use Utils\Globals;
 
 class Posts extends Runner {
     public function run(): void
@@ -16,7 +16,7 @@ class Posts extends Runner {
             throw new InvalidArgumentException("CategoryID cannot be lower or equal to zero!");
         }
 
-        $category = Application::museuCategoryRepository()->get($categoryID);
+        $category = Globals::museuCategoryRepository()->get($categoryID);
         if (!$category) {
             throw new Exception("could not find category on database");
         }
@@ -27,7 +27,7 @@ class Posts extends Runner {
         );
 
         while (true) {
-            $collection = Application::museuPostRepository()->list($categoryID, $this->limit, $offset);
+            $collection = Globals::museuPostRepository()->list($categoryID, $this->limit, $offset);
             if (empty($collection)) {
                 break;
             }

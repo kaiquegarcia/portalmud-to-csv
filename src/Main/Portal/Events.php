@@ -2,8 +2,8 @@
 
 namespace Main\Portal;
 
-use Main\Application;
 use Main\Runner;
+use Utils\Globals;
 
 class Events extends Runner {
     public function run(): void {
@@ -17,7 +17,7 @@ class Events extends Runner {
         );
 
         while (true) {
-            $collection = Application::eventRepository()->list($startID, $offset, $this->limit);
+            $collection = Globals::eventRepository()->list($startID, $offset, $this->limit);
             if (empty($collection)) {
                 break;
             }

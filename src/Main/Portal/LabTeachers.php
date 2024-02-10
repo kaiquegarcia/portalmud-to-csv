@@ -2,8 +2,8 @@
 
 namespace Main\Portal;
 
-use Main\Application;
 use Main\Runner;
+use Utils\Globals;
 
 class LabTeachers extends Runner {
     public function run(): void
@@ -15,7 +15,7 @@ class LabTeachers extends Runner {
         );
 
         while (true) {
-            $collection = Application::labTeacherRepository()->list($this->limit, $offset);
+            $collection = Globals::labTeacherRepository()->list($this->limit, $offset);
             if (empty($collection)) {
                 break;
             }

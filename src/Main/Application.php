@@ -88,17 +88,4 @@ class Application
             echo '- ' . str_replace('_', ' ', $command) . PHP_EOL;
         }
     }
-
-    public static function application(): self | null {
-        return $GLOBALS['application'];
-    }
-
-    public static function __callStatic($name, $arguments)
-    {
-        if (isset($GLOBALS[$name])) {
-            return $GLOBALS[$name];
-        }
-
-        return null;
-    }
 }

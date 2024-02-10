@@ -3,9 +3,9 @@
 namespace Repository;
 
 use Entity\MuseuPost;
-use Main\Application;
 use Utils\DatabaseConnector;
 use Utils\Env;
+use Utils\Globals;
 
 class MuseuPostRepository extends Repository
 {
@@ -31,7 +31,7 @@ class MuseuPostRepository extends Repository
 
     public static function getDatabaseConnector(): DatabaseConnector
     {
-        return Application::application()->museuConnection;
+        return Globals::app()->museuConnection;
     }
 
     public static function getDatabaseSchema(): string

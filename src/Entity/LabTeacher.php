@@ -2,9 +2,9 @@
 
 namespace Entity;
 
-use Main\Application;
 use Utils\Env;
 use Utils\Format;
+use Utils\Globals;
 
 class LabTeacher implements Entity {
     public function __construct(
@@ -28,7 +28,7 @@ class LabTeacher implements Entity {
 
     public function toCSVArray(): array {
         $mainPhoto = Format::mainPhoto($this->thumb);
-        $category = Application::categoryRepository()->get($this->categoryID);
+        $category = Globals::categoryRepository()->get($this->categoryID);
 
         return [
             'ID DO POST' => $this->ID,

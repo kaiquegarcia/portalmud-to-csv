@@ -3,9 +3,9 @@
 namespace Repository;
 
 use Entity\PortalPost;
-use Main\Application;
 use Utils\DatabaseConnector;
 use Utils\Env;
+use Utils\Globals;
 
 class PortalPostRepository extends Repository
 {
@@ -31,7 +31,7 @@ class PortalPostRepository extends Repository
 
     public static function getDatabaseConnector(): DatabaseConnector
     {
-        return Application::application()->portalConnection;
+        return Globals::app()->portalConnection;
     }
 
     public static function getDatabaseSchema(): string

@@ -3,9 +3,9 @@
 namespace Repository;
 
 use Entity\Columnist;
-use Main\Application;
 use Utils\DatabaseConnector;
 use Utils\Env;
+use Utils\Globals;
 
 class ColumnistRepository extends Repository
 {
@@ -32,7 +32,7 @@ class ColumnistRepository extends Repository
 
     public static function getDatabaseConnector(): DatabaseConnector
     {
-        return Application::application()->portalConnection;
+        return Globals::app()->portalConnection;
     }
 
     public static function getDatabaseSchema(): string

@@ -3,9 +3,9 @@
 namespace Repository;
 
 use Entity\MuralProfile;
-use Main\Application;
 use Utils\DatabaseConnector;
 use Utils\Env;
+use Utils\Globals;
 
 class MuralProfileRepository extends Repository
 {
@@ -27,7 +27,7 @@ class MuralProfileRepository extends Repository
 
     public static function getDatabaseConnector(): DatabaseConnector
     {
-        return Application::application()->portalConnection;
+        return Globals::app()->portalConnection;
     }
 
     public static function getDatabaseSchema(): string

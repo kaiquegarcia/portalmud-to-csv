@@ -3,9 +3,9 @@
 namespace Repository;
 
 use Entity\LabTeacher;
-use Main\Application;
 use Utils\DatabaseConnector;
 use Utils\Env;
+use Utils\Globals;
 
 class LabTeacherRepository extends Repository {
     public function list(int $limit, int $offset)
@@ -25,7 +25,7 @@ class LabTeacherRepository extends Repository {
 
     public static function getDatabaseConnector(): DatabaseConnector
     {
-        return Application::application()->portalConnection;
+        return Globals::app()->portalConnection;
     }
 
     public static function getDatabaseSchema(): string

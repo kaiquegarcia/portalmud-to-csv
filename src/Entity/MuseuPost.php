@@ -2,9 +2,9 @@
 
 namespace Entity;
 
-use Main\Application;
 use Utils\Env;
 use Utils\Format;
+use Utils\Globals;
 
 class MuseuPost implements Entity
 {
@@ -47,11 +47,11 @@ class MuseuPost implements Entity
 
     public function toCSVArray(): array
     {
-        $danceStyle = Application::museuDanceStyleRepository()->get($this->danceStyleID);
-        $period = Application::museuPeriodRepository()->get($this->periodID);
-        $country = Application::museuCountryRepository()->get($this->countryID);
-        $city = Application::museuCityRepository()->get($this->cityID);
-        $subcategory = Application::museuSubcategoryRepository()->get($this->subcategoryID);
+        $danceStyle = Globals::museuDanceStyleRepository()->get($this->danceStyleID);
+        $period = Globals::museuPeriodRepository()->get($this->periodID);
+        $country = Globals::museuCountryRepository()->get($this->countryID);
+        $city = Globals::museuCityRepository()->get($this->cityID);
+        $subcategory = Globals::museuSubcategoryRepository()->get($this->subcategoryID);
 
         switch ($this->categoryID) {
             case 19:

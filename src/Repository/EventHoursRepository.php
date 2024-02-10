@@ -3,9 +3,9 @@
 namespace Repository;
 
 use Entity\EventHours;
-use Main\Application;
 use Utils\DatabaseConnector;
 use Utils\Env;
+use Utils\Globals;
 
 class EventHoursRepository extends Repository {
     public function getByEventID(int $eventID) {
@@ -22,7 +22,7 @@ class EventHoursRepository extends Repository {
 
     public static function getDatabaseConnector(): DatabaseConnector
     {
-        return Application::application()->portalConnection;
+        return Globals::app()->portalConnection;
     }
 
     public static function getDatabaseSchema(): string
