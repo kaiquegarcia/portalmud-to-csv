@@ -9,7 +9,7 @@ use Utils\Globals;
 
 class PortalPostRepository extends Repository
 {
-    public function list(array $categoryIDs, int $limit, int $offset)
+    public function list(int $startID, array $categoryIDs, int $limit, int $offset)
     {
         if (empty($categoryIDs)) {
             throw new \InvalidArgumentException("CategoryIDs cannot be empty");
@@ -17,7 +17,7 @@ class PortalPostRepository extends Repository
 
         return $this->all(
             cacheKey: "",
-            condition: "`status`=1 AND `categoryID` IN (" . join(", ", $categoryIDs) . ")",
+            condition: "`status`=1 AND `ID` >= $startID AND `categoryID` IN (" . join(", ", $categoryIDs) . ")",
             orderBy: "`ID` ASC",
             limit: $limit,
             offset: $offset,

@@ -12,8 +12,6 @@ class Events extends Runner {
 
         $this->newCSV(
             filename: 'mural_event_2',
-            extractHeaders: $startID == 0,
-            append: true,
         );
 
         while (true) {

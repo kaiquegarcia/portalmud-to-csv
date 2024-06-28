@@ -8,6 +8,7 @@ use Utils\Globals;
 class PostNews extends Runner {
     public function run(): void
     {
+        $startID = $this->args["startID"] ?? 0;
         $offset = 0;
 
         $this->newCSV(
@@ -24,7 +25,7 @@ class PostNews extends Runner {
         }
 
         while (true) {
-            $collection = Globals::portalPostRepository()->list($categoryIDs, $this->limit, $offset);
+            $collection = Globals::portalPostRepository()->list($startID, $categoryIDs, $this->limit, $offset);
             if (empty($collection)) {
                 break;
             }

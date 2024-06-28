@@ -11,7 +11,7 @@ class EventRepository extends Repository {
     public function list(int $startID, int $offset, int $limit) {
         return $this->all(
             cacheKey: "",
-            condition: "`{$this::getTableName()}`.`status`=1 AND `{$this::getTableName()}`.`ID` > $startID",
+            condition: "`{$this::getTableName()}`.`status`=1 AND `{$this::getTableName()}`.`ID` >= $startID",
             orderBy: "`{$this::getTableName()}`.`ID` ASC",
             limit: $limit,
             offset: $offset,
