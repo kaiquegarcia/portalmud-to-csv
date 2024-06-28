@@ -25,19 +25,31 @@ class Format {
         '18 anos',
     ];
 
-    public static function mainPhoto(string | null $thumb) {
-        return $thumb ? Env::PHOTO_BASE_URL_PORTAL() . $thumb : '';
+    public static function mainPhoto(string | null $thumb, string $baseURL = '') {
+        if ($thumb === '') {
+            return '';
+        }
+
+        if ($baseURL === '') {
+            $baseURL = Env::PHOTO_BASE_URL_PORTAL();
+        }
+
+        return $baseURL . $thumb;
     }
     
-    public static function toWordPressGallery(array $photoURLs) {
+    public static function toWordPressGallery(array $photoURLs, string $baseURL = '') {
         if (empty($photoURLs)) {
             return '';
+        }
+
+        if ($baseURL === '') {
+            $baseURL = Env::PHOTO_BASE_URL_PORTAL();
         }
     
         $output = [];
         foreach($photoURLs as $photoData) {
             list($photoURL, $title) = explode(":", $photoData);
-            $output[] = Env::PHOTO_BASE_URL_PORTAL() . $photoURL;
+            $output[] = $baseURL . $photoURL;
         }
     
         return join('|', $output);
