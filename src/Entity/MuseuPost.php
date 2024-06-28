@@ -100,11 +100,11 @@ class MuseuPost implements Entity
     }
 
     private function getSanitizedPDF(): string {
-        return $this->PDF != '' ? Env::PHOTO_BASE_URL_PORTAL() . $this->PDF : '';
+        return $this->PDF != '' ? Env::PHOTO_BASE_URL_MUSEU() . $this->PDF : '';
     }
 
     private function getSanitizedPermalink(): string {
-        return Env::PERMALINK_BASE_URL_PORTAL() . $this->URL;
+        return Env::PERMALINK_BASE_URL_MUSEU() . $this->URL;
     }
 
     private function getSanitizedMaterialType(): string {
