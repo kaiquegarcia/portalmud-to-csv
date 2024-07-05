@@ -8,6 +8,10 @@ use Utils\Env;
 use Utils\Globals;
 
 class LabTeacherRepository extends Repository {
+    public function get(int $ID): LabTeacher | null {
+        return $this->first("$ID", "`ID` = $ID AND `status` = 1");
+    }
+
     public function list(int $limit, int $offset)
     {
         return $this->all(
