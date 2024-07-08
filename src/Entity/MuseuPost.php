@@ -108,13 +108,16 @@ class MuseuPost implements Entity
     }
 
     private function getSanitizedMaterialType(): string {
+        if ($this->categoryID == 18) {
+            // YES, THIS IS ON THE FRONT-END
+            return $this->postedAt;
+        }
+
         // yes, it's stored on 'thumb_link'..............
         switch($this->link) {
             case 'Programa':
             case 'Diário':
                 return $this->link . ' de Aula';
-            case 'Manuscrito':
-                return 'Croqui'; // !??!?!?!?!
         }
 
         return $this->link;
