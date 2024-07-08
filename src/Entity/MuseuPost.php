@@ -99,6 +99,10 @@ class MuseuPost implements Entity
         return [];
     }
 
+    private function getSanitizedTags(): string {
+        return str_replace(' ', '|', $this->tags);
+    }
+
     private function getSanitizedPDF(): string {
         return $this->PDF != '' ? Env::PHOTO_BASE_URL_MUSEU() . $this->PDF : '';
     }
@@ -148,7 +152,7 @@ class MuseuPost implements Entity
             "EVENTO" => $this->content2,
             "LOCAL" => $this->local,
             "DATA" => $this->postedAt,
-            "HASHTAGS" => str_replace(' ', '|', $this->tags),
+            "HASHTAGS" => $this->getSanitizedTags(),
             "ACERVO DOADO POR" => $this->content3,
             "IMAGEM DE CAPA" => Format::mainPhoto($this->thumb, Env::PHOTO_BASE_URL_MUSEU()),
             "IMAGENS DE GALERIA" => Format::toWordPressGallery($this->photoURLs, Env::PHOTO_BASE_URL_MUSEU()),
@@ -183,7 +187,7 @@ class MuseuPost implements Entity
             "EVENTO" => $this->content2,
             "LOCAL" => $this->local,
             "DATA" => $this->postedAt,
-            "HASHTAGS" => $this->tags,
+            "HASHTAGS" => $this->getSanitizedTags(),
             "ACERVO DOADO POR" => $this->content3,
             "IMAGEM DE CAPA" => Format::mainPhoto($this->thumb, Env::PHOTO_BASE_URL_MUSEU()),
             "IMAGENS DE GALERIA" => Format::toWordPressGallery($this->photoURLs, Env::PHOTO_BASE_URL_MUSEU()),
@@ -215,7 +219,7 @@ class MuseuPost implements Entity
             "EVENTO" => $this->content2,
             "LOCAL" => $this->local,
             "DATA" => $this->postedAt,
-            "HASHTAGS" => $this->tags,
+            "HASHTAGS" => $this->getSanitizedTags(),
             "ACERVO DOADO POR" => $this->content3,
             "IMAGEM DE CAPA" => Format::mainPhoto($this->thumb, Env::PHOTO_BASE_URL_MUSEU()),
             "IMAGENS GALERIA" => Format::toWordPressGallery($this->photoURLs, Env::PHOTO_BASE_URL_MUSEU()),
@@ -246,7 +250,7 @@ class MuseuPost implements Entity
             "EVENTO" => $this->content2,
             "LOCAL" => $this->local,
             "DATA" => $this->postedAt,
-            "HASHTAGS" => $this->tags,
+            "HASHTAGS" => $this->getSanitizedTags(),
             "ACERVO DOADO POR" => $this->content3,
             "IMAGEM DE CAPA" => Format::mainPhoto($this->thumb, Env::PHOTO_BASE_URL_MUSEU()),
             "IMAGENS DE GALERIA" => Format::toWordPressGallery($this->photoURLs, Env::PHOTO_BASE_URL_MUSEU()),
@@ -279,7 +283,7 @@ class MuseuPost implements Entity
             "EVENTO" => $this->content2,
             "LOCAL" => $this->local,
             "DATA" => $this->postedAt,
-            "HASHTAGS" => $this->tags,
+            "HASHTAGS" => $this->getSanitizedTags(),
             "ACERVO DOADO POR" => $this->content3,
             "IMAGEM DE CAPA" => Format::mainPhoto($this->thumb, Env::PHOTO_BASE_URL_MUSEU()),
             "LINK DO VÍDEO" => $this->link,
