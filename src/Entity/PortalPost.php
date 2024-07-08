@@ -25,11 +25,16 @@ class PortalPost implements Entity {
     public function toCSVArray(): array {
         $mainPhoto = Format::mainPhoto($this->thumb);
         $category = Globals::portalCategoryRepository()->get($this->categoryID);
+        $topCategory = $category && $category->topID ? Globals::portalCategoryRepository()->get($category->topID) : null;
         $columnist = Globals::columnistRepository()->get($this->columnistID);
 
         $tags = [];
         if ($category) {
             $tags[] = $category->name;
+        }
+
+        if ($topCategory) {
+            $tags[] = $topCategory->name;
         }
 
         if ($columnist) {
@@ -49,6 +54,7 @@ class PortalPost implements Entity {
             'DESCRIÇÃO DA IMAGEM' => '',
             'IMAGEM DESTAQUE' => $mainPhoto,
             'CATEGORIAS' => $category ? $category->name : 'Portal da Dança',
+            'PILAR' => $topCategory ? $topCategory->name : '',
             'TAGS' => join('|', $tags),
             'STATUS DO POST' => Env::POST_STATUS(),
             'Author ID' => Env::POST_AUTHOR_ID(),

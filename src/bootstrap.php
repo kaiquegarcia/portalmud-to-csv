@@ -34,7 +34,7 @@ $application->on('export', function() use ($application) {
 
 $application->on('export events', new \Main\Portal\Events(100, ["startID" => 2444]));
 $application->on('export columnists', new \Main\Portal\Columnists(500));
-$application->on('export postnews', new \Main\Portal\PostNews(100, ["startID" => 564]));
+$application->on('export postnews', new \Main\Portal\PostNews(100, ["startID" => 0]));
 $application->on('export mural-profiles', new \Main\Portal\MuralProfiles(100));
 $application->on('export lab-teachers', new \Main\Portal\LabTeachers(100));
 $application->on('export acervo-clipping', new \Main\Museu\Posts(100, ["categoryID" => 19]));
