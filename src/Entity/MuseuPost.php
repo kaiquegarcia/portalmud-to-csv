@@ -253,6 +253,7 @@ class MuseuPost implements Entity
             "LEGENDAS IMAGENS GALERIA" => Format::toWordPressGalleryLegends($this->photoURLs),
             "PDF" => $this->getSanitizedPDF(),
             "PERMALINK" => $this->getSanitizedPermalink(),
+            "TIPO DE MATERIAL" => $this->getSanitizedMaterialType(),
         ];
     }
 
