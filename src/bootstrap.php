@@ -26,6 +26,7 @@ $museuDanceStyleRepository = new \Repository\MuseuDanceStyleRepository($applicat
 $museuPeriodRepository = new \Repository\MuseuPeriodRepository($application);
 $museuPostRepository = new \Repository\MuseuPostRepository($application);
 $labPackRepository = new \Repository\LabPackRepository($application);
+$museuCollectionRepository = new \Repository\MuseuCollectionRepository($application);
 
 # Register commands
 $application->on('export', function() use ($application) {

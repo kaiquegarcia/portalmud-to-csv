@@ -131,6 +131,8 @@ class MuseuPost implements Entity
         MuseuSubcategory | null $subcategory,
     ): array
     {
+        $collection = Globals::museuCollectionRepository()->getByPostID($this->ID);
+
         return [
             "ID DO POST" => $this->ID,
             "TÍTULO" => $this->title,
@@ -146,7 +148,7 @@ class MuseuPost implements Entity
             "EVENTO" => $this->content2,
             "LOCAL" => $this->local,
             "DATA" => $this->postedAt,
-            "HASHTAGS" => $this->tags,
+            "HASHTAGS" => str_replace(' ', '|', $this->tags),
             "ACERVO DOADO POR" => $this->content3,
             "IMAGEM DE CAPA" => Format::mainPhoto($this->thumb, Env::PHOTO_BASE_URL_MUSEU()),
             "IMAGENS DE GALERIA" => Format::toWordPressGallery($this->photoURLs, Env::PHOTO_BASE_URL_MUSEU()),
@@ -154,6 +156,7 @@ class MuseuPost implements Entity
             "PDF" => $this->getSanitizedPDF(),
             "LINK" => $this->link,
             "PERMALINK" => $this->getSanitizedPermalink(),
+            'COLEÇÃO' => $collection ? $collection->title : '',
         ];
     }
 
