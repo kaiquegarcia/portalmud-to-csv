@@ -35,13 +35,11 @@ class MuseuCollection implements Entity
 
     public function toCSVArray(): array
     {
-        $category = Globals::museuCategoryRepository()->get($this->categoryID);
         $country = Globals::museuCountryRepository()->get($this->countryID);
         $city = Globals::museuCityRepository()->get($this->cityID);
 
         return [
             'ID DO POST' => $this->ID,
-            'CATEGORIA' => $category ? $category->name : '',
             'IMAGEM DE CAPA' => Format::mainPhoto($this->thumb, Env::PHOTO_BASE_URL_MUSEU()),
             'PAÍS' => $country ? $country->name : '',
             'CIDADE' => $city ? $city->name : '',

@@ -25,6 +25,17 @@ class MuseuCollectionRepository extends Repository
         return $collection;
     }
 
+    public function list(int $limit, int $offset)
+    {
+        return $this->all(
+            cacheKey: "",
+            condition: "`status`=1",
+            orderBy: "`ID` ASC",
+            limit: $limit,
+            offset: $offset,
+        );
+    }
+
     public static function getTableName(): string {
         return 'web_collection';
     }

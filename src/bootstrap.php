@@ -43,4 +43,5 @@ $application->on('export acervo-documents', new \Main\Museu\Posts(100, ["categor
 $application->on('export acervo-photographies', new \Main\Museu\Posts(100, ["categoryID" => 22]));
 $application->on('export acervo-graphic-materials', new \Main\Museu\Posts(100, ["categoryID" => 23]));
 $application->on('export acervo-videos', new \Main\Museu\Posts(100, ["categoryID" => 24]));
+$application->on('export acervo-colecoes', new \Main\Museu\Collections(100));
 $application->on('export lab-packs', new \Main\Portal\LabPacks(100));
