@@ -11,7 +11,7 @@ class Columnists extends Runner {
         $offset = 0;
 
         $this->newCSV(
-            filename: 'portal_columnist_2',
+            filename: 'portal_columnist_v3',
         );
 
         while (true) {

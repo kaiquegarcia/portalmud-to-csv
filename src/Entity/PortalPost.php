@@ -26,7 +26,13 @@ class PortalPost implements Entity {
         $mainPhoto = Format::mainPhoto($this->thumb);
         $category = Globals::portalCategoryRepository()->get($this->categoryID);
         $topCategory = $category && $category->topID ? Globals::portalCategoryRepository()->get($category->topID) : null;
-        $columnist = Globals::columnistRepository()->get($this->columnistID);
+        $columnistData = Globals::columnistRepository()->get($this->columnistID);
+        $partner =  $columnist = null;
+        if ($columnistData?->isPartner()) {
+            $partner = $columnistData;
+        } else {
+            $columnist = $columnistData;
+        }
 
         $tags = [];
         if ($category) {
@@ -43,6 +49,7 @@ class PortalPost implements Entity {
 
         return [
             'ID DO POST' => $this->ID,
+            'ID COLUNISTA/PARCEIRO' => $this->columnistID,
             'TITULO DO POST' => $this->title,
             'CONTEÚDO' => $this->content,
             'PRÉVIA' => $this->preview,
@@ -66,6 +73,7 @@ class PortalPost implements Entity {
             'PALAVRAS CHAVE' => '',
             'URL IMAGENS DA GALERIA' => Format::toWordPressGallery($this->photoURLs),
             'COLUNISTA' => $columnist ? $columnist->name : '',
+            'PARCEIRO' => $partner ? $partner->name : '',
             'CRÉDITO DA FOTO' => $this->thumbCredit,
         ];
     }

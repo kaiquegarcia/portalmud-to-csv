@@ -12,7 +12,7 @@ class PostNews extends Runner {
         $offset = 0;
 
         $this->newCSV(
-            filename: 'portal_portalpost_3',
+            filename: 'portal_portalpost_v4',
         );
 
         $categoryIDs = [];
