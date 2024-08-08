@@ -53,6 +53,10 @@ abstract class Repository
             $orderByStatement
             $limitStatement"
         );
+        if ($contents === false) {
+            return null;
+        }
+        
         if (!$contents?->num_rows) {
             $contents->close();
             return null;

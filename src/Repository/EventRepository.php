@@ -37,6 +37,8 @@ class EventRepository extends Repository {
         return "
         `{$this::getTableName()}`.ID,
         `{$this::getTableName()}`.`categoryID`,
+        `{$this::getTableName()}`.`profileID`,
+        `{$this::getTableName()}`.`personID`,
         `{$this::getTableName()}`.thumb,
         `{$this::getTableName()}`.URL,
         `eventtype`.`name` AS `type`,
@@ -82,6 +84,8 @@ class EventRepository extends Repository {
         return new Event(
             ID: $data["ID"],
             categoryID: $data["categoryID"],
+            profileID: $data["profileID"],
+            personID: $data["personID"],
             thumb: $data["thumb"],
             URL: $data["URL"],
             typeName: $data["type"],

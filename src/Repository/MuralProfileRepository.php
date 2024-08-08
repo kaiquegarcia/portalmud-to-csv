@@ -9,6 +9,10 @@ use Utils\Globals;
 
 class MuralProfileRepository extends Repository
 {
+    public function get(int $ID): MuralProfile | null {
+        return $this->first("$ID", "`ID` = $ID AND `status` != 2");
+    }
+
     public function list(int $limit, int $offset)
     {
         return $this->all(
@@ -62,10 +66,10 @@ class MuralProfileRepository extends Repository
             nickname: $data["nickname"],
             bio: $data["bio"],
             email: $data["email"],
-            website: $data["website"],
-            phone: $data["phone"],
-            phoneFix: $data["phone_fix"],
-            whatsapp: $data["whatsapp"],
+            website: $data["website"] ?? '',
+            phone: $data["phone"] ?? '',
+            phoneFix: $data["phone_fix"] ?? '',
+            whatsapp: $data["whatsapp"] ?? '',
             foundationYear: $data["foundation_year"],
             foundationDate: $data["foundation_date"],
             createdAt: $data["registry_date"],

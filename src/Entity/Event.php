@@ -11,6 +11,8 @@ class Event implements Entity
     public function __construct(
         public int $ID,
         public int $categoryID,
+        public int $profileID,
+        public int $personID,
         public string $thumb,
         public string $URL,
         public string $typeName,
@@ -119,10 +121,15 @@ class Event implements Entity
     }
 
     public function toCSVArray(): array {
+        $profile = $this->profileID > 0 ? Globals::muralProfileRepository()->get($this->profileID) : null;
         return [
             'ID DO POST' => $this->ID,
             'TITULO DO POST' => $this->title,
             'NOME DO AUTOR' => $this->authorName,
+            'NOME DO PERFIL' => $profile?->name ?? '',
+            'E-MAIL DO PERFIL' => $profile?->email ?? '',
+            'TELEFONE DO PERFIL' => $profile?->phoneFix ?? '',
+            'CELULAR DO PERFIL' => $profile?->phone ?? '',
             'TIPO DE EVENTO' => $this->typeName,
             'MODALIDADES' => join('|', $this->getModalityNames()),
             'IMAGEM DE CAPA' => Format::mainPhoto($this->thumb),
