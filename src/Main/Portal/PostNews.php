@@ -12,11 +12,17 @@ class PostNews extends Runner {
         $offset = 0;
 
         $this->newCSV(
-            filename: 'portal_portalpost_v4',
+            filename: 'portal_portalpost_v5',
         );
 
         $categoryIDs = [];
-        $categoryCollection = Globals::portalCategoryRepository()->getByURL("fique-ligado");
+        $categoryCollection = Globals::portalCategoryRepository()->getByURLs(
+            "fique-ligado",
+            "museu-da-danca",
+            "mural-da-danca",
+            "calendario-da-danca",
+            "laboratorio-da-danca",
+        );
         if (!empty($categoryCollection)) {
             /** @var \Entity\Category $category */
             foreach($categoryCollection as $category) {

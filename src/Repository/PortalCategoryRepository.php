@@ -17,8 +17,9 @@ class PortalCategoryRepository extends Repository {
         return $this->first("$ID", "`ID` = $ID AND `status` != 2");
     }
 
-    public function getByURL(string $URL) {
-        $result = $this->all("", "`URL` = '$URL' AND `status` != 2");
+    public function getByURLs(string ...$URLs) {
+        $urlQuery = join("', '", $URLs);
+        $result = $this->all("", "`URL` IN ('$urlQuery') AND `status` != 2");
         /** @var \Entity\Category $category */
         foreach($result as $category) {
             $this->cache["{$category->ID}"] = new EntityCollection([$category]);
