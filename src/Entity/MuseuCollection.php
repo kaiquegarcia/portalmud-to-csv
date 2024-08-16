@@ -33,6 +33,22 @@ class MuseuCollection implements Entity
         public string $site,
     ) { }
 
+    private function getPostSlugs(): string
+    {
+        $postSlugs = [];
+        $posts = Globals::museuPostRepository()->getListByID(explode(",", $this->postIDs));
+        if ($posts == null) {
+            return '';
+        }
+
+        // @var \Entity\MuseuPost
+        foreach($posts as $post) {
+            $postSlugs[] = $post->URL;
+        }
+
+        return join('|', $postSlugs);
+    }
+
     public function toCSVArray(): array
     {
         $country = Globals::museuCountryRepository()->get($this->countryID);
@@ -40,6 +56,8 @@ class MuseuCollection implements Entity
 
         return [
             'ID DO POST' => $this->ID,
+            'SLUG' => $this->URL,
+            'PERMALINK' => Env::PERMALINK_BASE_URL_MUSEU() . $this->URL,
             'IMAGEM DE CAPA' => Format::mainPhoto($this->thumb, Env::PHOTO_BASE_URL_MUSEU()),
             'PAÍS' => $country ? $country->name : '',
             'CIDADE' => $city ? $city->name : '',
@@ -47,7 +65,6 @@ class MuseuCollection implements Entity
             'ANO DE ENCERRAMENTO' => $this->endingYear,
             'ANO DE NASCIMENTO' => $this->birthYear,
             'ANO DE FALECIMENTO' => $this->deathYear,
-            'PERMALINK' => Env::PERMALINK_BASE_URL_MUSEU() . $this->URL,
             'TÍTULO' => $this->title,
             'FICHA TÉCNICA' => $this->techinicalSpecification,
             'DESCRIÇÃO' => $this->preview,
@@ -58,6 +75,7 @@ class MuseuCollection implements Entity
             'YOUTUBE' => $this->youtube,
             'TWITTER' => $this->twitter,
             'SITE' => $this->site,
+            'ACERVOS' => $this->getPostSlugs(),
         ];
     }
 }

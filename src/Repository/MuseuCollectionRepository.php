@@ -10,7 +10,7 @@ use Utils\Globals;
 
 class MuseuCollectionRepository extends Repository
 {
-    public function getByPostID(int $postID): MuseuCollection | null {
+    public function getFirstByPostID(int $postID): MuseuCollection | null {
         $collection = $this->first("post_$postID", "(`content1` LIKE '$postID,%' OR `content1` LIKE '%,$postID' OR `content1` LIKE '%,$postID,%' OR `content1` = '$postID') AND `status` != 2");
         if ($collection == null) {
             return $collection;
@@ -23,6 +23,17 @@ class MuseuCollectionRepository extends Repository
         }
 
         return $collection;
+    }
+
+    public function getAllByPostID(int $postID)
+    {
+        return $this->all(
+            cacheKey: "collections_of_post_$postID",
+            condition: "(`content1` LIKE '$postID,%' OR `content1` LIKE '%,$postID' OR `content1` LIKE '%,$postID,%' OR `content1` = '$postID') AND `status` != 2",
+            orderBy: "`ID` ASC",
+            limit: 10,
+            offset: 0,
+        );
     }
 
     public function list(int $limit, int $offset)

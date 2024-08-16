@@ -127,6 +127,21 @@ class MuseuPost implements Entity
         return $this->link;
     }
 
+    private function getCollectionSlugs(): string {
+        $collectionSlugs = [];
+        $collections = Globals::museuCollectionRepository()->getAllByPostID($this->ID);
+        if ($collections == null) {
+            return '';
+        }
+
+        // @var \Entity\MuseuCollection $collection
+        foreach($collections as $collection) {
+            $collectionSlugs[] = $collection->URL;
+        }
+
+        return join('|', $collectionSlugs);
+    }
+
     private function getClippingCSVArray(
         MuseuDanceStyle | null $danceStyle,
         MuseuPeriod | null $period,
@@ -135,10 +150,10 @@ class MuseuPost implements Entity
         MuseuSubcategory | null $subcategory,
     ): array
     {
-        $collection = Globals::museuCollectionRepository()->getByPostID($this->ID);
-
         return [
             "ID DO POST" => $this->ID,
+            "PERMALINK" => $this->getSanitizedPermalink(),
+            'SLUG' => $this->URL,
             "TÍTULO" => $this->title,
             "SUBCATEGORIA" => $subcategory ? $subcategory->name : '',
             "ESTILO DE DANÇA" => $danceStyle ? $danceStyle->name : '',
@@ -159,8 +174,7 @@ class MuseuPost implements Entity
             "LEGENDAS IMAGENS GALERIA" => Format::toWordPressGalleryLegends($this->photoURLs),
             "PDF" => $this->getSanitizedPDF(),
             "LINK" => $this->link,
-            "PERMALINK" => $this->getSanitizedPermalink(),
-            'COLEÇÃO' => $collection ? $collection->title : '',
+            'COLEÇÕES' => $this->getCollectionSlugs(),
         ];
     }
 
@@ -174,6 +188,8 @@ class MuseuPost implements Entity
     {
         return [
             "ID DO POST" => $this->ID,
+            "PERMALINK" => $this->getSanitizedPermalink(),
+            'SLUG' => $this->URL,
             "TÍTULO" => $this->title,
             "SUBCATEGORIA" => $subcategory ? $subcategory->name : '',
             "ESTILO DE DANÇA" => $danceStyle ? $danceStyle->name : '',
@@ -193,7 +209,7 @@ class MuseuPost implements Entity
             "IMAGENS DE GALERIA" => Format::toWordPressGallery($this->photoURLs, Env::PHOTO_BASE_URL_MUSEU()),
             "LEGENDAS IMAGENS GALERIA" => Format::toWordPressGalleryLegends($this->photoURLs),
             "PDF" => $this->getSanitizedPDF(),
-            "PERMALINK" => $this->getSanitizedPermalink(),
+            'COLEÇÕES' => $this->getCollectionSlugs(),
         ];
     }
 
@@ -207,6 +223,8 @@ class MuseuPost implements Entity
     {
         return [
             "ID DO POST" => $this->ID,
+            "PERMALINK" => $this->getSanitizedPermalink(),
+            'SLUG' => $this->URL,
             "TÍTULO" => $this->title,
             "SUBCATEGORIA" => $subcategory ? $subcategory->name : '',
             "ESTILO DE DANÇA" => $danceStyle ? $danceStyle->name : '',
@@ -224,7 +242,7 @@ class MuseuPost implements Entity
             "IMAGEM DE CAPA" => Format::mainPhoto($this->thumb, Env::PHOTO_BASE_URL_MUSEU()),
             "IMAGENS GALERIA" => Format::toWordPressGallery($this->photoURLs, Env::PHOTO_BASE_URL_MUSEU()),
             "LEGENDAS IMAGENS GALERIA" => Format::toWordPressGalleryLegends($this->photoURLs),
-            "PERMALINK" => $this->getSanitizedPermalink(),
+            'COLEÇÕES' => $this->getCollectionSlugs(),
         ];
     }
 
@@ -238,6 +256,8 @@ class MuseuPost implements Entity
     {
         return [
             "ID DO POST" => $this->ID,
+            "PERMALINK" => $this->getSanitizedPermalink(),
+            'SLUG' => $this->URL,
             "TÍTULO" => $this->title,
             "SUBCATEGORIA" => $subcategory ? $subcategory->name : '',
             "ESTILO DE DANÇA" => $danceStyle ? $danceStyle->name : '',
@@ -256,8 +276,8 @@ class MuseuPost implements Entity
             "IMAGENS DE GALERIA" => Format::toWordPressGallery($this->photoURLs, Env::PHOTO_BASE_URL_MUSEU()),
             "LEGENDAS IMAGENS GALERIA" => Format::toWordPressGalleryLegends($this->photoURLs),
             "PDF" => $this->getSanitizedPDF(),
-            "PERMALINK" => $this->getSanitizedPermalink(),
             "TIPO DE MATERIAL" => $this->getSanitizedMaterialType(),
+            'COLEÇÕES' => $this->getCollectionSlugs(),
         ];
     }
 
@@ -271,6 +291,8 @@ class MuseuPost implements Entity
     {
         return [
             "ID DO POST" => $this->ID,
+            "PERMALINK" => $this->getSanitizedPermalink(),
+            'SLUG' => $this->URL,
             "TÍTULO" => $this->title,
             "SUBCATEGORIA" => $subcategory ? $subcategory->name : '',
             "ESTILO DE DANÇA" => $danceStyle ? $danceStyle->name : '',
@@ -287,7 +309,7 @@ class MuseuPost implements Entity
             "ACERVO DOADO POR" => $this->content3,
             "IMAGEM DE CAPA" => Format::mainPhoto($this->thumb, Env::PHOTO_BASE_URL_MUSEU()),
             "LINK DO VÍDEO" => $this->link,
-            "PERMALINK" => $this->getSanitizedPermalink(),
+            'COLEÇÕES' => $this->getCollectionSlugs(),
         ];
     }
 }

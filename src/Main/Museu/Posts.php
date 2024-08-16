@@ -23,7 +23,7 @@ class Posts extends Runner {
 
         /** @var \Entity\MuseuCategory $category */
         $this->newCSV(
-            filename: 'museu_posts_' . $category->URL,
+            filename: 'museu_posts_v2_' . $category->URL,
         );
 
         while (true) {

@@ -11,7 +11,7 @@ class Collections extends Runner {
         $offset = 0;
 
         $this->newCSV(
-            filename: 'museu_collections',
+            filename: 'museu_collections_v2',
         );
 
         while (true) {

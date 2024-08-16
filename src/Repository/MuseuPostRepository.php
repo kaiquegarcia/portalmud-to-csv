@@ -24,6 +24,22 @@ class MuseuPostRepository extends Repository
         );
     }
 
+    public function getListByID(array $IDs)
+    {
+        $IDs = join(",", $IDs);
+        if ($IDs === '') {
+            return null;
+        }
+
+        return $this->all(
+            cacheKey: "",
+            condition: "`status`=1 AND `ID` IN ($IDs)",
+            orderBy: "`ID` ASC",
+            limit: 500,
+            offset: 0,
+        );
+    }
+
     public static function getTableName(): string
     {
         return "web_post";
