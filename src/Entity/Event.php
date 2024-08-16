@@ -32,39 +32,19 @@ class Event implements Entity
         public string | null $stateUF,
         public string | null $cityName,
         public string | null $districtName,
+        public string | null $addressPostalCode,
+        public string | null $addressComplement,
         public string | null $addressStreet,
         public string | null $addressNumber,
         public string | null $addressName,
         public int $capacity,
+        public string | null $googleMapsIframe,
     ) {
     }
 
     private function getAgeGroup(): string
     {
         return Format::toAgeGroup($this->ageGroup);
-    }
-
-    private function getAddress(): string
-    {
-        $pieces = [];
-        
-        if ($this->addressStreet) {
-            $pieces[] = $this->addressStreet;
-        }
-
-        if ($this->addressNumber) {
-            $pieces[] = $this->addressNumber;
-        }
-
-        if ($this->districtName) {
-            $pieces[] = "bairro {$this->districtName}";
-        }
-
-        if ($this->cityName && $this->stateUF) {
-            $pieces[] = "{$this->cityName}-{$this->stateUF}";
-        }
-
-        return join(", ", $pieces);
     }
 
     private function getPrice(): string
@@ -124,6 +104,8 @@ class Event implements Entity
         $profile = $this->profileID > 0 ? Globals::muralProfileRepository()->get($this->profileID) : null;
         return [
             'ID DO POST' => $this->ID,
+            'SLUG' => 'eventos/' . $this->URL,
+            'PERMALINK' => Env::PERMALINK_BASE_URL_PORTAL() . 'eventos/' . $this->URL,
             'TITULO DO POST' => $this->title,
             'NOME DO AUTOR' => $this->authorName,
             'NOME DO PERFIL' => $profile?->name ?? '',
@@ -145,9 +127,16 @@ class Event implements Entity
             'Nome/Identificação do local' => $this->addressName,
             'ACESSIBILIDADE' => $this->hasAccessibility ? 'sim' : 'não',
             'CAPACIDADE' => $this->capacity > 0 ? intval($this->capacity) . ' pessoas' : '',
-            'ENDEREÇO' => $this->getAddress(),
+            'NOME ENDEREÇO' => $this->addressName,
+            'CEP' => $this->addressPostalCode,
+            'LOGRADOURO' => $this->addressStreet,
+            'NÚMERO' => $this->addressNumber,
+            'COMPLEMENTO' => $this->addressComplement,
+            'BAIRRO' => $this->districtName,
+            'CIDADE' => $this->cityName,
+            'ESTADO (UF)' => $this->stateUF,
             'URL IMAGENS DA GALERIA' => Format::toWordPressGallery($this->photoURLs),
-            'PERMALINK' => Env::PERMALINK_BASE_URL_PORTAL() . 'eventos/' . $this->URL,
+            'GOOGLE MAPS IFRAME' => $this->googleMapsIframe,
         ];
     }
 }

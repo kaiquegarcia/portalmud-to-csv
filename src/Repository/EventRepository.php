@@ -51,6 +51,7 @@ class EventRepository extends Repository {
         `{$this::getTableName()}`.max_price,
         `{$this::getTableName()}`.website,
         `{$this::getTableName()}`.age,
+        `{$this::getTableName()}`.iframe_map,
         (CASE
             WHEN `{$this::getTableName()}`.`localID` > 0 THEN `local`.`accessibility`
             ELSE `address`.`accessibility`
@@ -63,6 +64,8 @@ class EventRepository extends Repository {
         `district`.`name` AS `district_name`,
         (CASE WHEN `{$this::getTableName()}`.`localID` > 0 THEN `local_address`.`street` ELSE `address`.`street` END) AS `street`,
         (CASE WHEN `{$this::getTableName()}`.`localID` > 0 THEN `local_address`.`number` ELSE `address`.`number` END) AS `number`,
+        (CASE WHEN `{$this::getTableName()}`.`localID` > 0 THEN `local_address`.`complement` ELSE `address`.`complement` END) AS `complement`,
+        (CASE WHEN `{$this::getTableName()}`.`localID` > 0 THEN `local_address`.`zipcode` ELSE `address`.`zipcode` END) AS `zipcode`,
         (CASE WHEN `{$this::getTableName()}`.`localID` > 0 THEN `local`.`nickname` ELSE `address`.`name` END) AS `local`,
         (CASE WHEN `{$this::getTableName()}`.`localID` > 0 THEN `local`.`capacity` ELSE `address`.`capacity` END) AS `capacity`";
     }
@@ -105,10 +108,13 @@ class EventRepository extends Repository {
             stateUF: $data["state_UF"],
             cityName: $data["city_name"],
             districtName: $data["district_name"],
+            addressPostalCode: $data["zipcode"],
+            addressComplement: $data["complement"],
             addressStreet: $data["street"],
             addressNumber: $data["number"],
             addressName: $data["local"],
             capacity: $data["capacity"] ?? 0,
+            googleMapsIframe: $data['iframe_map'],
         );
     }
 }
