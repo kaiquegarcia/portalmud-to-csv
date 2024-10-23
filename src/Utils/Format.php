@@ -77,9 +77,9 @@ class Format {
         return $date;
     }
 
-    public static function eventHours(EntityCollection | null $collection): string {
+    public static function eventHours(EntityCollection | null $collection): \Utils\EventHours {
         if (!$collection) {
-            return "";
+            return new \Utils\EventHours();
         }
 
         $matrix = [];
@@ -92,18 +92,19 @@ class Format {
             $matrix[$hours->dayOfWeek][] = self::timeRange($hours->init, $hours->end);
         }
 
-        $array = [];
+        $eventHours = new \Utils\EventHours();
         foreach($matrix as $dayOfWeek => $timeRanges) {
-            $lastIndex = count($timeRanges) - 1;
-            $last = $timeRanges[$lastIndex];
-            unset($timeRanges[$lastIndex]);
-            $array[] = self::toDayOfWeek($dayOfWeek) . ": " . join(", ", $timeRanges) . ($lastIndex > 0 ? " e " : "") . $last;
+            foreach($timeRanges as $range) {
+                $eventHours->days[] = self::toDayOfWeek($dayOfWeek);
+                $eventHours->startTimes[] = $range[0];
+                $eventHours->endTimes[] = $range[1];
+            }
         }
 
-        return join("|", $array);
+        return $eventHours;
     }
 
-    public static function timeRange(string $init, string $end): string {
+    public static function timeRange(string $init, string $end): array {
         $init = preg_replace(
             self::TIME_RANGE_INPUT_REGEXP,
             self::TIME_RANGE_OUTPUT_REGEXP,
@@ -115,7 +116,7 @@ class Format {
             self::TIME_RANGE_OUTPUT_REGEXP,
             $end,
         );
-        return "$init - $end";
+        return [$init, $end];
     }
 
     public static function toDayOfWeek(int $dayOfWeek): string {

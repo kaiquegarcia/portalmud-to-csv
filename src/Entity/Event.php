@@ -39,6 +39,7 @@ class Event implements Entity
         public string | null $addressName,
         public int $capacity,
         public string | null $googleMapsIframe,
+        public string | null $createdAt,
     ) {
     }
 
@@ -95,13 +96,14 @@ class Event implements Entity
         return [];
     }
 
-    private function getHours(): string {
+    private function getHours(): \Utils\EventHours {
         $hoursCollection = Globals::eventHoursRepository()->getByEventID($this->ID);
         return Format::eventHours($hoursCollection);
     }
 
     public function toCSVArray(): array {
         $profile = $this->profileID > 0 ? Globals::muralProfileRepository()->get($this->profileID) : null;
+        $eventHours = $this->getHours();
         return [
             'ID DO POST' => $this->ID,
             'SLUG' => 'eventos/' . $this->URL,
@@ -122,8 +124,11 @@ class Event implements Entity
             'EMAIL' => $this->email,
             'CONTEÚDO' => $this->content,
             'DATA DE INÍCIO' => Format::nullableDate($this->periodInit),
-            'DATA DE TÉRMINO' => Format::nullableDate($this->periodEnd),
-            'HORÁRIOS' => $this->getHours(),
+            'DATA DE TÉRMINO' => $this->periodInit !== $this->periodEnd ? Format::nullableDate($this->periodEnd) : '',
+            'DATA DE CADASTRO' => Format::nullableDate($this->createdAt),
+            'DIA DA SEMANA' => join('|', $eventHours->days),
+            'HORÁRIO DE INÍCIO' => join('|', $eventHours->startTimes),
+            'HORÁRIO DE TÉRMINO' => join('|', $eventHours->endTimes),
             'Nome/Identificação do local' => $this->addressName,
             'ACESSIBILIDADE' => $this->hasAccessibility ? 'sim' : 'não',
             'CAPACIDADE' => $this->capacity > 0 ? intval($this->capacity) . ' pessoas' : '',

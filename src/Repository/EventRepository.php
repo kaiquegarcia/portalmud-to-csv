@@ -52,6 +52,7 @@ class EventRepository extends Repository {
         `{$this::getTableName()}`.website,
         `{$this::getTableName()}`.age,
         `{$this::getTableName()}`.iframe_map,
+        `{$this::getTableName()}`.registry_date,
         (CASE
             WHEN `{$this::getTableName()}`.`localID` > 0 THEN `local`.`accessibility`
             ELSE `address`.`accessibility`
@@ -115,6 +116,7 @@ class EventRepository extends Repository {
             addressName: $data["local"],
             capacity: $data["capacity"] ?? 0,
             googleMapsIframe: $data['iframe_map'],
+            createdAt: $data['registry_date'],
         );
     }
 }
