@@ -27,6 +27,7 @@ $museuPeriodRepository = new \Repository\MuseuPeriodRepository($application);
 $museuPostRepository = new \Repository\MuseuPostRepository($application);
 $labPackRepository = new \Repository\LabPackRepository($application);
 $museuCollectionRepository = new \Repository\MuseuCollectionRepository($application);
+$newsletterEmailRepository = new \Repository\NewsletterEmailRepository($application);
 
 # Register commands
 $application->on('export', function() use ($application) {
@@ -45,3 +46,4 @@ $application->on('export acervo-graphic-materials', new \Main\Museu\Posts(20, ["
 $application->on('export acervo-videos', new \Main\Museu\Posts(20, ["categoryID" => 24]));
 $application->on('export acervo-colecoes', new \Main\Museu\Collections(20));
 $application->on('export lab-packs', new \Main\Portal\LabPacks(100));
+$application->on('export newsletter-emails', new \Main\Portal\NewsletterEmails(100));
